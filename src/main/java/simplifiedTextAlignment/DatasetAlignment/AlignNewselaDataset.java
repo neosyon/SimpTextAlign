@@ -25,8 +25,8 @@ public class AlignNewselaDataset {
 		//BEGINNING OF CONFIG PARAMETERS
 		
 		String baseDir = "/home/mfranco/nlp/corpora/";
-		String inFolder = baseDir+"newsela_article_corpus_2016-01-29/articles/";
-//		String inFolder = baseDir+"newsela_article_corpus_2016-01-29/testArticles/";
+		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/articles/";
+//		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/testArticles/";
 
 //		String language = DefinedConstants.EnglishLanguage;
 		String language = DefinedConstants.SpanishLanguage;
@@ -72,7 +72,9 @@ public class AlignNewselaDataset {
 		}
 		else if(similarityStrategy.equals(DefinedConstants.CNGstrategy)){
 			System.out.println("Calculating IDF...");
-			model = new ModelContainer(new NgramModel(inFolder,language,alignmentLevel, true, nGramSize));
+			NgramModel aux;
+			model = new ModelContainer(aux = new NgramModel(true, nGramSize));
+			aux.buildNewselaNgramModel(inFolder,language, alignmentLevel);
 		}
 		
 		// create output folder if it does not exists

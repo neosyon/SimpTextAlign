@@ -1,5 +1,7 @@
 package simplifiedTextAlignment.Representations;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,13 +26,15 @@ public class NgramModel {
 	boolean isCNGmodel;
 	double nDocs;
 	
-	public NgramModel(String inFolder, String language, String alignmentLevel, boolean isCNG, int n) throws IOException {
+	public NgramModel(boolean isCNG, int n) throws IOException {
 		nSize = n;
 		isCNGmodel = isCNG;
 		n2i = new HashMap<String,Integer>();
 		i2IDF = new ArrayList<Double>();
 		nDocs = 0;
-		
+	}
+	
+	public void buildNewselaNgramModel(String inFolder, String language, String alignmentLevel) throws IOException {
 		DirectoryScanner scanner = new DirectoryScanner();
 		scanner.setIncludes(new String[]{"*."+language+".0.txt"});
 		scanner.setBasedir(inFolder);
@@ -50,6 +54,19 @@ public class NgramModel {
 			}
 		}	
 		calculateIDF();
+	}
+	
+
+	public void buildWikiSimpleWikiModel(String inFile, String language, String alignmentLevel) throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader(inFile));
+		String line;
+		while((line=in.readLine())!=null){
+			String ar[] = line.split("\t");
+			processAndCountTextNgrams(ar[1],alignmentLevel);
+			processAndCountTextNgrams(ar[2],alignmentLevel);
+		}
+		in.close();
+		calculateIDF();		
 	}
 
 	private void processAndCountTextNgrams(String text, String alignmentLevel) {
