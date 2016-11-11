@@ -27,7 +27,7 @@ AlignNewselaDataset inFolder outFolder language similarityStrategy alignmentLeve
 
 *language*: the language of the newsela texts. It can be *es* or *en*.
 
-*similarityStrategy*: can be CNG, WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.
+*similarityStrategy*: can be *CNG*, *WAVG*, or *CWASA*, where the *N* in *CNG* should be changed for the desired *n*-gram size, e.g. *C3G*.
 
 *alignmentLevel*:
 
@@ -35,7 +35,7 @@ AlignNewselaDataset inFolder outFolder language similarityStrategy alignmentLeve
 
 *subLvAlignmentStrategy*:
 
-*embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with WAVG and CWASA.
+*embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
 ## Custom dataset
 
@@ -58,7 +58,7 @@ ComputeSimilarityBetweenTexts inFile outFile similarityStrategy embeddingsTxtFil
 
 *outFile*: the name of the output file. It contains the original tab-separated texts plus their similarity score.
 
-*similarityStrategy*: can be CNG, WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.	
+*similarityStrategy*: can be *CNG*, *WAVG*, or *CWASA*, where the *N* in *CNG* should be changed for the desired *n*-gram size, e.g. *C3G*.	
 
-*embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with WAVG and CWASA.
+*embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
