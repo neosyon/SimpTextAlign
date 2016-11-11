@@ -25,7 +25,7 @@ AlignNewselaDataset inFolder outFolder language similarityStrategy alignmentLeve
 
 *outFolder*: the folder where the alignments will be stored.
 
-*language*: the language of the newsela texts. It can be "es" or "en".
+*language*: the language of the newsela texts. It can be *es* or *en*.
 
 *similarityStrategy*: can be CNG, WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.
 
