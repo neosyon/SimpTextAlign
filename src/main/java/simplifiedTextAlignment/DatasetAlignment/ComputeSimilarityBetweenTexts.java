@@ -50,10 +50,9 @@ public class ComputeSimilarityBetweenTexts {
 		else if(language.equals(DefinedConstants.SpanishLanguage))
 			embeddingsFile = baseDir+"w2v_collections/SBW-vectors-300-min5.txt";
 		
-		if(args.length == 4){
+		if(args.length == 4 || args.length == 3){
 			inFile = args[0];
 			outFile = args[1];
-			embeddingsFile = args[3];
 			if(args[2].equals("CWASA"))
 				similarityStrategy = DefinedConstants.CWASAstrategy;
 			else if(args[2].equals("WAVG"))
@@ -67,11 +66,22 @@ public class ComputeSimilarityBetweenTexts {
 				showUsageMessage();
 				System.exit(1);
 			}
+			if(args.length == 4)
+				embeddingsFile = args[3];
+			else{
+				if(similarityStrategy == DefinedConstants.CNGstrategy)
+					embeddingsFile = null;
+				else{
+					System.out.println("Error: embeddings file missing!");
+					showUsageMessage();
+					System.exit(1);
+				}	
+			}
 			firstSentIndex = 0;
 			secondSentIndex = 1;
 		}
 		else {
-			System.out.print("Using parameters by default.");
+			System.out.println("Using parameters by default. ");
 			showUsageMessage();
 		}
 		
@@ -103,8 +113,8 @@ public class ComputeSimilarityBetweenTexts {
 	}
 
 	private static void showUsageMessage() {
-		System.out.println("Usage: program inFile outFile strategy embeddingsTxtFile\n"
-				+ "\"strategy\" can be CNG WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.");		
+		System.out.println("Usage: program inFile outFile similarityStrategy {embeddingsTxtFile}\n"
+				+ "\"similarityStrategy\" can be CNG, WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.");		
 	}
 
 	private static void calculateTwoTextPerLineFileSimilarities(String inFile, String outFile, String similarityStrategy, 
@@ -125,7 +135,7 @@ public class ComputeSimilarityBetweenTexts {
 			else if(ar.length == 2)
 				out.write(ar[firstSentIndex]+"\t"+ar[secondSentIndex]+"\t"+alignments.get(0).getSimilarity()+"\n");
 			else{
-				System.out.print("Error: the format of the input file is the following (use tab separator):\ntext1\ttext2");
+				System.out.println("Error: the format of the input file is the following (use tab separator):\ntext1\ttext2");
 				System.exit(1);
 			}
 			i++;
