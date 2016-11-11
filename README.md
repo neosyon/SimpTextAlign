@@ -4,7 +4,7 @@ This project includes several lexical and semantic  **text similarity methods** 
 
 # How to use
 
-We provide classes to align the Newsela and also a custom dataset.
+We provide classes to align the Newsela dataset and also a custom one.
 
 ## Newsela dataset
 
@@ -42,6 +42,8 @@ embeddingsTxtFile: the embeddings using the classical word2vec txt format with a
 To align a custom dataset the following class:
 
 [src/main/java/simplifiedTextAlignment/DatasetAlignment/ComputeSimilarityBetweenTexts.java](src/main/java/simplifiedTextAlignment/DatasetAlignment/ComputeSimilarityBetweenTexts.java)
+
+*We note that this class also works if you provide as input with the annotations.txt file from [Standard Wikipedia to Simple Wikipedia work](http://ssli.ee.washington.edu/tial/projects/simplification/)*
 
 ### Usage
 
