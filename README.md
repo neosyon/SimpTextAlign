@@ -43,7 +43,7 @@ To align a custom dataset the following class:
 
 [src/main/java/simplifiedTextAlignment/DatasetAlignment/ComputeSimilarityBetweenTexts.java](src/main/java/simplifiedTextAlignment/DatasetAlignment/ComputeSimilarityBetweenTexts.java)
 
-*We note that this class also works if you provide as input with the annotations.txt file from [Standard Wikipedia to Simple Wikipedia work](http://ssli.ee.washington.edu/tial/projects/simplification/)*
+*We note that this class also works if you provide as input with the annotations.txt file containing the Standard Wikipedia to Simple Wikipedia alignments made by [Hwang et al.](http://ssli.ee.washington.edu/tial/projects/simplification/)*
 
 ### Usage
 
