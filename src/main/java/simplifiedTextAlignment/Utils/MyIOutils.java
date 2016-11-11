@@ -110,15 +110,14 @@ public class MyIOutils {
 		System.out.println("");
 	}
 
-
-	public static Set<String> readWikiSimpleWikiEmbeddingVocabulary(String inFile) throws IOException {
+	public static Set<String> readTwoTextPerLineFileEmbeddingVocabulary(String inFile, int fistSentIndex, int secondSentIndex) throws IOException {
 		Set<String> vocab = new HashSet<String>();
 		BufferedReader in = new BufferedReader(new FileReader(inFile));
 		String line;
 		while((line=in.readLine())!=null){
 			String ar[] = line.split("\t");
-			vocab.addAll(TextProcessingUtils.getCleanEmbeddingModelTokens(ar[1]));			
-			vocab.addAll(TextProcessingUtils.getCleanEmbeddingModelTokens(ar[2]));	
+			vocab.addAll(TextProcessingUtils.getCleanEmbeddingModelTokens(ar[fistSentIndex]));			
+			vocab.addAll(TextProcessingUtils.getCleanEmbeddingModelTokens(ar[secondSentIndex]));	
 		}
 		in.close();
 		return vocab;

@@ -18,7 +18,7 @@ import simplifiedTextAlignment.Utils.MyIOutils;
 import simplifiedTextAlignment.Utils.TextProcessingUtils;
 import simplifiedTextAlignment.Utils.VectorUtils;
 
-public class AlignWikiSimpleWiki {
+public class ComputeSimilarityBetweenTexts {
 
 	public static void main(String args[]) throws IOException{
 		//BEGINNING OF CONFIG PARAMETERS
@@ -26,6 +26,9 @@ public class AlignWikiSimpleWiki {
 		String baseDir = "/home/mfranco/nlp/corpora/";
 		String inFile = baseDir+"SimplifiedTextAlignment/WikiSimpleWiki/annotations.txt";
 
+		int firstSentIndex = 1;
+		int secondSentIndex = 2;
+		
 		String language = DefinedConstants.EnglishLanguage;
 
 		String alignmentLevel = DefinedConstants.SentenceLevel;
@@ -40,12 +43,37 @@ public class AlignWikiSimpleWiki {
 		
 		String outFile = inFile+"_"+alignmentLevel+
 				"_"+(similarityStrategy.equals(DefinedConstants.CNGstrategy) ? similarityStrategy.replace("N", nGramSize+"") : similarityStrategy);
-		String embeddingsFile = null;
 		
+		String embeddingsFile = null;
 		if(language.equals(DefinedConstants.EnglishLanguage))
 			embeddingsFile = baseDir+"w2v_collections/Wikipedia/vectors/EN_Wikipedia_w2v_input_format.txtUTF8.vec";
 		else if(language.equals(DefinedConstants.SpanishLanguage))
 			embeddingsFile = baseDir+"w2v_collections/SBW-vectors-300-min5.txt";
+		
+		if(args.length == 4){
+			inFile = args[0];
+			outFile = args[1];
+			embeddingsFile = args[3];
+			if(args[2].equals("CWASA"))
+				similarityStrategy = DefinedConstants.CWASAstrategy;
+			else if(args[2].equals("WAVG"))
+				similarityStrategy = DefinedConstants.WAVGstrategy;
+			else if(args[2].length() == 3 && args[2].charAt(0) == 'C'  && args[2].charAt(2) == 'G'){
+				similarityStrategy = DefinedConstants.CNGstrategy;
+				nGramSize = Integer.parseInt(args[2].charAt(1)+"");
+			}
+			else{
+				System.out.print("Error: unrecognized strategy. ");
+				showUsageMessage();
+				System.exit(1);
+			}
+			firstSentIndex = 0;
+			secondSentIndex = 1;
+		}
+		else {
+			System.out.print("Using parameters by default.");
+			showUsageMessage();
+		}
 		
 		//END CONFIG PARAMETERS
 		
@@ -53,7 +81,7 @@ public class AlignWikiSimpleWiki {
 		ModelContainer model = null;
 		if((isCWASA=similarityStrategy.equals(DefinedConstants.CWASAstrategy)) || similarityStrategy.equals(DefinedConstants.WAVGstrategy)){
 			System.out.println("Reading embeddings...");
-			Set<String> vocab = MyIOutils.readWikiSimpleWikiEmbeddingVocabulary(inFile);
+			Set<String> vocab = MyIOutils.readTwoTextPerLineFileEmbeddingVocabulary(inFile, firstSentIndex, secondSentIndex);
 			model = new ModelContainer(new EmbeddingModel(embeddingsFile,vocab));
 			if(isCWASA){
 				model.em.precomputeW2VcosDist();
@@ -64,18 +92,23 @@ public class AlignWikiSimpleWiki {
 			System.out.println("Calculating IDF...");
 			NgramModel aux;
 			model = new ModelContainer(aux = new NgramModel(true, nGramSize));
-			aux.buildWikiSimpleWikiModel(inFile,language, alignmentLevel);
+			aux.buildTwoTextPerLineFileModel(inFile, alignmentLevel, firstSentIndex, secondSentIndex);
 		}
 		
 		System.out.println("Aligning...");
 		long ini = System.currentTimeMillis();
-		calculateWikiSimpleWikiSimilarities(inFile,language,outFile, similarityStrategy, alignmentStrategy, alignmentLevel, model);
+		calculateTwoTextPerLineFileSimilarities(inFile,outFile, similarityStrategy, alignmentStrategy, alignmentLevel, model, firstSentIndex, secondSentIndex);
 		long end = System.currentTimeMillis();
 		System.out.println("Alignment done in " + ((double) ((end-ini)/ 1000) / 60) + " minutes.");
 	}
 
-	private static void calculateWikiSimpleWikiSimilarities(String inFile, String language, String outFile, String similarityStrategy, 
-			String alignmentStrategy, String alignmentLevel, ModelContainer model) throws IOException {
+	private static void showUsageMessage() {
+		System.out.println("Usage: program inFile outFile strategy embeddingsTxtFile\n"
+				+ "\"strategy\" can be CNG WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.");		
+	}
+
+	private static void calculateTwoTextPerLineFileSimilarities(String inFile, String outFile, String similarityStrategy, 
+			String alignmentStrategy, String alignmentLevel, ModelContainer model, int firstSentIndex, int secondSentIndex) throws IOException {
 		BufferedReader in = new BufferedReader(new FileReader(inFile));
 		BufferedWriter out = new BufferedWriter(new FileWriter(outFile));
 		String line;
@@ -84,10 +117,17 @@ public class AlignWikiSimpleWiki {
 			if(i%1000==0)
 				System.out.println(i);
 			String ar[] = line.split("\t");
-			List<Text2abstractRepresentation> cleanSubtexts1 = TextProcessingUtils.getCleanText(ar[1],alignmentLevel, similarityStrategy,model);
-			List<Text2abstractRepresentation> cleanSubtexts2 = TextProcessingUtils.getCleanText(ar[2],alignmentLevel, similarityStrategy,model);
+			List<Text2abstractRepresentation> cleanSubtexts1 = TextProcessingUtils.getCleanText(ar[firstSentIndex],alignmentLevel, similarityStrategy,model);
+			List<Text2abstractRepresentation> cleanSubtexts2 = TextProcessingUtils.getCleanText(ar[secondSentIndex],alignmentLevel, similarityStrategy,model);
 			List<TextAlignment> alignments = VectorUtils.alignUsingStrategy(cleanSubtexts1, cleanSubtexts2,similarityStrategy, alignmentStrategy, model);
-			out.write(ar[0] +"\t"+ar[1]+"\t"+ar[2]+"\t"+alignments.get(0).getSimilarity()+"\n");
+			if(ar.length == 3 || ar.length == 4) // this is only for the WikiSimpleWiki dataset
+				out.write(ar[0] +"\t"+ar[firstSentIndex]+"\t"+ar[secondSentIndex]+"\t"+alignments.get(0).getSimilarity()+"\n");
+			else if(ar.length == 2)
+				out.write(ar[firstSentIndex]+"\t"+ar[secondSentIndex]+"\t"+alignments.get(0).getSimilarity()+"\n");
+			else{
+				System.out.print("Error: the format of the input file is the following (use tab separator):\ntext1\ttext2");
+				System.exit(1);
+			}
 			i++;
 		}
 		in.close();

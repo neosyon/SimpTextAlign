@@ -56,17 +56,16 @@ public class NgramModel {
 		calculateIDF();
 	}
 	
-
-	public void buildWikiSimpleWikiModel(String inFile, String language, String alignmentLevel) throws IOException {
+	public void buildTwoTextPerLineFileModel(String inFile, String alignmentLevel, int fistSentIndex, int secondSentIndex) throws IOException {
 		BufferedReader in = new BufferedReader(new FileReader(inFile));
 		String line;
 		while((line=in.readLine())!=null){
 			String ar[] = line.split("\t");
-			processAndCountTextNgrams(ar[1],alignmentLevel);
-			processAndCountTextNgrams(ar[2],alignmentLevel);
+			processAndCountTextNgrams(ar[fistSentIndex],alignmentLevel);
+			processAndCountTextNgrams(ar[secondSentIndex],alignmentLevel);
 		}
 		in.close();
-		calculateIDF();		
+		calculateIDF();	
 	}
 
 	private void processAndCountTextNgrams(String text, String alignmentLevel) {
