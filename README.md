@@ -1,4 +1,4 @@
-This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is able to align at different levels: paragraph and sentence. 
+This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is also able to align at different levels: paragraph and sentence. 
 
 **_TO DO_** describe alignment and similarity lexical (language-independent) and semantic (word embedding collection-dependent) strategies joint with alignment level. 
 
