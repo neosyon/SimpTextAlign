@@ -4,7 +4,7 @@ This project includes several lexical and semantic  **text similarity methods** 
 
 # How to use
 
-We provide classes to align Newsela and also some custom dataset.
+We provide classes to align the Newsela and also a custom dataset.
 
 ## Newsela dataset
 
