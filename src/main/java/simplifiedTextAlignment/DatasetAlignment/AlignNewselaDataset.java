@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.tools.ant.DirectoryScanner;
@@ -28,24 +30,24 @@ public class AlignNewselaDataset {
 		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/articles/";
 //		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/testArticles/";
 
-//		String language = DefinedConstants.EnglishLanguage;
-		String language = DefinedConstants.SpanishLanguage;
+		String language = DefinedConstants.EnglishLanguage;
+//		String language = DefinedConstants.SpanishLanguage;
 
 //		String alignmentLevel = DefinedConstants.ParagraphSepEmptyLineLevel;
-//		String alignmentLevel = DefinedConstants.SentenceLevel;
-		String alignmentLevel = DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel;
+		String alignmentLevel = DefinedConstants.SentenceLevel;
+//		String alignmentLevel = DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel;
 		
 		int nGramSize = 3;
 		
 //		String similarityStrategy = DefinedConstants.WAVGstrategy;
-		String similarityStrategy = DefinedConstants.CWASAstrategy;
-//		String similarityStrategy = DefinedConstants.CNGstrategy;
+//		String similarityStrategy = DefinedConstants.CWASAstrategy;
+		String similarityStrategy = DefinedConstants.CNGstrategy;
 
-//		String alignmentStrategy = DefinedConstants.closestSimStrategy;
-		String alignmentStrategy = DefinedConstants.closestSimKeepingSeqStrategy;
+		String alignmentStrategy = DefinedConstants.closestSimStrategy;
+//		String alignmentStrategy = DefinedConstants.closestSimKeepingSeqStrategy;
 
-//		String subLvAlignmentStrategy = DefinedConstants.closestSimStrategy;
-		String subLvAlignmentStrategy = DefinedConstants.closestSimKeepingSeqStrategy;
+		String subLvAlignmentStrategy = DefinedConstants.closestSimStrategy;
+//		String subLvAlignmentStrategy = DefinedConstants.closestSimKeepingSeqStrategy;
 		
 		String outFolder = baseDir+"newsela_article_corpus_2016-01-29/output/"+language+"/"+alignmentLevel+
 				"_"+(!alignmentLevel.equals(DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel) ? alignmentStrategy : alignmentStrategy+"_"+subLvAlignmentStrategy)
@@ -57,6 +59,32 @@ public class AlignNewselaDataset {
 		else if(language.equals(DefinedConstants.SpanishLanguage))
 			embeddingsFile = baseDir+"w2v_collections/SBW-vectors-300-min5.txt";
 		
+		if (args.length > 0) {
+			inFolder = outFolder = null;
+			nGramSize = 0;
+			Map<String, String> param2value = MyIOutils.parseOptions(args);
+			if (param2value == null) {
+				System.out.println("Error: invalid input options. ");
+				MyIOutils.showNewselaUsageMessage();
+				System.exit(1);
+			}
+			inFolder = param2value.get("input");
+			outFolder = param2value.get("output");
+			language = param2value.get("language");
+			alignmentLevel = param2value.get("aLv");
+			similarityStrategy = param2value.get("similarity");
+			alignmentStrategy = param2value.get("aSt");
+			subLvAlignmentStrategy = param2value.get("aSt2");
+			embeddingsFile = param2value.get("emb");
+			if (similarityStrategy != null && similarityStrategy.length() == 3 && similarityStrategy.charAt(0) == 'C'	&& similarityStrategy.charAt(2) == 'G') {
+				similarityStrategy = DefinedConstants.CNGstrategy;
+				nGramSize = Integer.parseInt(similarityStrategy.charAt(1) + "");
+			}
+		} else {
+			System.out.println("Using parameters by default. ");
+			MyIOutils.showNewselaUsageMessage();
+		}
+
 		//END CONFIG PARAMETERS
 		
 		boolean isCWASA = false;

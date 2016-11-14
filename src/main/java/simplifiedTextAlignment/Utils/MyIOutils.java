@@ -122,4 +122,55 @@ public class MyIOutils {
 		in.close();
 		return vocab;
 	}
+
+	public static Map<String, String> parseOptions(String[] ar) {
+		if(ar.length%2 != 0)
+			return null;
+		Map<String,String> param2value = new HashMap<String,String>();
+		for(int i = 0; i < ar.length; i+=2){
+			if(ar[i].equals("-i"))
+				param2value.put("input", ar[i+1]);
+			else if(ar[i].equals("-o"))
+				param2value.put("output", ar[i+1]);
+			else if(ar[i].equals("-l"))
+				param2value.put("language", ar[i+1]);
+			else if(ar[i].equals("-s"))
+				param2value.put("similarity", ar[i+1]);
+			else if(ar[i].equals("-a"))
+				param2value.put("aLv", ar[i+1]);
+			else if(ar[i].equals("-t"))
+				param2value.put("aSt", ar[i+1]);
+			else if(ar[i].equals("-u"))
+				param2value.put("aSt2", ar[i+1]);
+			else if(ar[i].equals("-e"))
+				param2value.put("emb", ar[i+1]);
+			else
+				return null;
+		}
+		return param2value;
+	}
+
+	public static void showNewselaUsageMessage() {
+		System.out.println("Usage:\nprogram -i inFolder -o outFolder  -l language -s similarityStrategy -a alignmentLevel -t alignmentStrategy"
+				+ " {-u SubLevelalignmentStrategy} {-e embeddingsTxtFile}\n"
+				+ "\"inFolder\" is the folder with the original newsela texts."	
+				+ "\"outFolder\" is the folder where the alignments will be stored."	
+				+ "\"language\" can be \""+DefinedConstants.SpanishLanguage+"\" or \""+DefinedConstants.EnglishLanguage+"\". Default: \""+DefinedConstants.EnglishLanguage+"\"."	
+				+ "\"similarityStrategy\" can be \""+DefinedConstants.CNGstrategy+"\", \""+DefinedConstants.WAVGstrategy+"\", or \""+DefinedConstants.CWASAstrategy+"\", where the N in \""+DefinedConstants.CNGstrategy+"\" should be replaced for the desired n-gram size, e.g. \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\". Default: \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\"."	
+				+ "\"alignmentLevel\" can be \""+DefinedConstants.ParagraphSepEmptyLineLevel+"\", \""+DefinedConstants.SentenceLevel+"\", or \""+DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel+"\". Default: \""+DefinedConstants.SentenceLevel+"\"."
+				+ "\"alignmentStrategy\" can be \""+DefinedConstants.closestSimStrategy+"\" or \""+DefinedConstants.closestSimKeepingSeqStrategy+"\". Default: \""+DefinedConstants.closestSimStrategy+"\"."
+				+ "\"SubLevelalignmentStrategy\" can be \""+DefinedConstants.closestSimStrategy+"\" or \""+DefinedConstants.closestSimKeepingSeqStrategy+"\". Default: \""+DefinedConstants.closestSimStrategy+"\"."
+				+ "\"embeddingsTxtFile\" is the file with the embeddings using the classical word2vec txt format."	
+				);		
+
+	}
+
+	public static void showCustomModelUsageMessage() {
+		System.out.println("Usage:\nprogram -i inFile -o outFile -s similarityStrategy {-e embeddingsTxtFile}\n"
+				+ "\"inFile\" is a file with two tab-separated texts per line. The program will output a similarity score for each one of these text pairs."	
+				+ "\"outFile\" contains the original \"inFile\" tab-separated texts plus their similarity score."	
+				+ "\"similarityStrategy\" can be \""+DefinedConstants.CNGstrategy+"\", \""+DefinedConstants.WAVGstrategy+"\", or \""+DefinedConstants.CWASAstrategy+"\", where the N in \""+DefinedConstants.CNGstrategy+"\" should be replaced for the desired n-gram size, e.g. \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\". Default: \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\"."	
+				+ "\"embeddingsTxtFile\" is the file with the embeddings using the classical word2vec txt format."	
+				);				
+	}
 }

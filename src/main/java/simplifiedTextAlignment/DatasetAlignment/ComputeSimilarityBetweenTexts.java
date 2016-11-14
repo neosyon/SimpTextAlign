@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import simplifiedTextAlignment.Representations.ModelContainer;
@@ -36,8 +37,8 @@ public class ComputeSimilarityBetweenTexts {
 		int nGramSize = 3;
 		
 //		String similarityStrategy = DefinedConstants.WAVGstrategy;
-		String similarityStrategy = DefinedConstants.CWASAstrategy;
-//		String similarityStrategy = DefinedConstants.CNGstrategy;
+//		String similarityStrategy = DefinedConstants.CWASAstrategy;
+		String similarityStrategy = DefinedConstants.CNGstrategy;
 		
 		String alignmentStrategy = DefinedConstants.closestSimStrategy;
 		
@@ -50,39 +51,28 @@ public class ComputeSimilarityBetweenTexts {
 		else if(language.equals(DefinedConstants.SpanishLanguage))
 			embeddingsFile = baseDir+"w2v_collections/SBW-vectors-300-min5.txt";
 		
-		if(args.length == 4 || args.length == 3){
-			inFile = args[0];
-			outFile = args[1];
-			if(args[2].equals("CWASA"))
-				similarityStrategy = DefinedConstants.CWASAstrategy;
-			else if(args[2].equals("WAVG"))
-				similarityStrategy = DefinedConstants.WAVGstrategy;
-			else if(args[2].length() == 3 && args[2].charAt(0) == 'C'  && args[2].charAt(2) == 'G'){
-				similarityStrategy = DefinedConstants.CNGstrategy;
-				nGramSize = Integer.parseInt(args[2].charAt(1)+"");
-			}
-			else{
-				System.out.print("Error: unrecognized strategy. ");
-				showUsageMessage();
-				System.exit(1);
-			}
-			if(args.length == 4)
-				embeddingsFile = args[3];
-			else{
-				if(similarityStrategy == DefinedConstants.CNGstrategy)
-					embeddingsFile = null;
-				else{
-					System.out.println("Error: embeddings file missing!");
-					showUsageMessage();
-					System.exit(1);
-				}	
-			}
+		if (args.length > 0) {
+			inFile = outFile = null;
+			nGramSize = 0;
 			firstSentIndex = 0;
 			secondSentIndex = 1;
-		}
-		else {
+			Map<String, String> param2value = MyIOutils.parseOptions(args);
+			if (param2value == null) {
+				System.out.println("Error: invalid input options. ");
+				MyIOutils.showCustomModelUsageMessage();
+				System.exit(1);
+			}
+			inFile = param2value.get("input");
+			outFile = param2value.get("output");
+			similarityStrategy = param2value.get("similarity");
+			embeddingsFile = param2value.get("emb");
+			if (similarityStrategy != null && similarityStrategy.length() == 3 && similarityStrategy.charAt(0) == 'C'	&& similarityStrategy.charAt(2) == 'G') {
+				similarityStrategy = DefinedConstants.CNGstrategy;
+				nGramSize = Integer.parseInt(similarityStrategy.charAt(1) + "");
+			}
+		} else {
 			System.out.println("Using parameters by default. ");
-			showUsageMessage();
+			MyIOutils.showCustomModelUsageMessage();
 		}
 		
 		//END CONFIG PARAMETERS
@@ -110,11 +100,6 @@ public class ComputeSimilarityBetweenTexts {
 		calculateTwoTextPerLineFileSimilarities(inFile,outFile, similarityStrategy, alignmentStrategy, alignmentLevel, model, firstSentIndex, secondSentIndex);
 		long end = System.currentTimeMillis();
 		System.out.println("Alignment done in " + ((double) ((end-ini)/ 1000) / 60) + " minutes.");
-	}
-
-	private static void showUsageMessage() {
-		System.out.println("Usage: program inFile outFile similarityStrategy {embeddingsTxtFile}\n"
-				+ "\"similarityStrategy\" can be CNG, WAVG, or CWASA, where the N in CNG should be changed for the desired n-gram size, e.g. C3G.");		
 	}
 
 	private static void calculateTwoTextPerLineFileSimilarities(String inFile, String outFile, String similarityStrategy, 
