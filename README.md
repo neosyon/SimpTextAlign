@@ -1,6 +1,6 @@
 # Description
 
-This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is also able to **align at different text representation levels**: **paragraph**, **sentence**, and **sentence with paragraph pre-alignment**. 
+This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is also able to **align at different text representation levels**: **paragraph**, **sentence**, and **sentence with paragraph pre-alignment**. We provide classes to align the **[Newsela dataset](https://newsela.com/data/)** and also a **custom** one.
 
 The **lexical similarity strategy** implements the Character *N*-Gram (**CNG**) [1] similarity for text, combined with the log TF-IDF weighting and cosine similarity for the comparison. Since this approach do **not uses any language-specific resource**, it works for any language. There are two possible **semantic similarity strategies**. The first one, **WAVG**, is based on representing each text by averaging its word embeddings, with cosine similarity for the comparison. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) method [2] based on the use of directed edge word embedding alignments. These two **embedding-based approaches require the corresponding embedding collection** as input.
 
@@ -8,7 +8,7 @@ We have two **alignment strategies**. The first one **aligns texts using the clo
 
 # How to use
 
-We provide classes to align the Newsela dataset and also a custom one.
+We provide classes to align the **[Newsela dataset](https://newsela.com/data/)** and also a **custom** one.
 
 ## Newsela dataset
 
