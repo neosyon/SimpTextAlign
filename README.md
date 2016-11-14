@@ -1,8 +1,8 @@
 This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is also able to align at different levels: paragraph, sentence, and sentence with paragraph pre-alignment. 
 
-The lexical similarity strategy uses a character *n*-gram representation of text (CNG) [1], combined with the log TF-IDF weighting and cosine similarity . The 
+The **lexical similarity strategy** implements the Character *N*-Gram (**CNG**) [1] similarity for text, combined with the log TF-IDF weighting and cosine similarity for the comparison. Since this approach do **not uses any language-specific resource**, it works for any language. There are two possible semantic similarity strategies. The first one, **WAVG**, is based on representing each text by averaging its word embeddings, with cosine similarity for the comparison. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) method [2] based on the use of directed edge word embedding alignments. These two **embedding-based approaches require the corresponding embedding collection** as input.
 
-**_TO DO_** describe alignment and similarity lexical (language-independent) and semantic (word embedding collection-dependent) strategies joint with alignment level. 
+
 
 # How to use
 
@@ -68,5 +68,5 @@ ComputeSimilarityBetweenTexts -i inFile -o outFile -s similarityStrategy {-e emb
 
 [1] Paul Mcnamee and James Mayfield. 2004. Character n-gram tokenization for European language text retrieval. Information Retrieval, 7(1):73–97.
 
-
+[2] Marc Franco-Salvador, Parth Gupta, Paolo Rosso, and Rafael E. Banchs. 2016. Cross-language plagiarism detection over continuous-space- and knowledge graph-based representations of language. Knowledge-Based Systems, 111:87–99.
 
