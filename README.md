@@ -1,29 +1,29 @@
-# Description
+#Description
 
 This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is also able to **align at different text representation levels**: **paragraph**, **sentence**, and **sentence with paragraph pre-alignment**. We provide classes to align the **[Newsela dataset](https://newsela.com/data/)** and also a **custom** one.
 
-The **lexical similarity strategy** implements the Character *N*-Gram (**CNG**) [1](# References) similarity for text, combined with the log TF-IDF weighting and cosine similarity for the comparison. Since this approach do **not uses any language-specific resource**, it works for any language. There are two possible **semantic similarity strategies**. The first one, **WAVG**, is based on representing each text by averaging its word embeddings, with cosine similarity for the comparison. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) method [2](# References) based on the use of directed edge word embedding alignments. These two **embedding-based approaches require the corresponding embedding collection** as input.
+The **lexical similarity strategy** implements the Character *N*-Gram (**CNG**) [1](#References) similarity for text, combined with the log TF-IDF weighting and cosine similarity for the comparison. Since this approach do **not uses any language-specific resource**, it works for any language. There are two possible **semantic similarity strategies**. The first one, **WAVG**, is based on representing each text by averaging its word embeddings, with cosine similarity for the comparison. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) method [2](#References) based on the use of directed edge word embedding alignments. These two **embedding-based approaches require the corresponding embedding collection** as input.
 
 We have two **alignment strategies**. The first one **aligns texts using the closest (most similar) text**. The second one **aligns to the closest** texts **but** employs a post-processing to **force the target aligned text offsets to be increasing in value**. Basically, it extracts the longest increassing (or equal) subsequence of aligned target offsets. Next, it restricts the searching space of the texts not included in that sequence to the indexes of its previous and next aligned texts. 
 
-# How to use
+#How to use
 
 We provide classes to align the **[Newsela dataset](https://newsela.com/data/)** and also a **custom** one.
 
-## Newsela dataset
+##Newsela dataset
 
 To align the Newsela dataset execute the following class:
 
 [src/main/java/simplifiedTextAlignment/DatasetAlignment/AlignNewselaDataset.java](src/main/java/simplifiedTextAlignment/DatasetAlignment/AlignNewselaDataset.java)
 
-### Usage
+###Usage
 
 ```
 AlignNewselaDataset -i inFolder -o outFolder  -l language -s similarityStrategy -a alignmentLevel -t alignmentStrategy {-u SubLevelalignmentStrategy} {-e embeddingsTxtFile}
 
 ```
 
-#### Description of the arguments:
+####Description of the arguments:
 
 *inFolder*: the folder with the original newsela texts.
 
@@ -41,7 +41,7 @@ AlignNewselaDataset -i inFolder -o outFolder  -l language -s similarityStrategy 
 		
 *embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
-## Custom dataset
+##Custom dataset
 
 To align a custom dataset the following class:
 
@@ -49,14 +49,14 @@ To align a custom dataset the following class:
 
 *We note that this class also works if you remove the first and last column of the annotations.txt file containing the Standard Wikipedia to Simple Wikipedia alignments made by [Hwang et al.](http://ssli.ee.washington.edu/tial/projects/simplification/)*
 
-### Usage
+###Usage
 
 ```
 ComputeSimilarityBetweenTexts -i inFile -o outFile -s similarityStrategy {-e embeddingsTxtFile}
 
 ```
 
-#### Description of the arguments:
+####Description of the arguments:
 
 *inFile*: it is a file with two tab-separated texts per line. The program will output a similarity score for each one of these text pairs.
 
@@ -66,7 +66,7 @@ ComputeSimilarityBetweenTexts -i inFile -o outFile -s similarityStrategy {-e emb
 
 *embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
-# References
+#References
 
 [1] Paul Mcnamee and James Mayfield. 2004. Character n-gram tokenization for European language text retrieval. Information Retrieval, 7(1):73–97.
 
