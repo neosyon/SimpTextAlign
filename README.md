@@ -33,7 +33,7 @@ AlignNewselaDataset -i inFolder -o outFolder  -l language -s similarityStrategy 
 
 *alignmentStrategy*: is the strategy to align the compared texts. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Default: *closestSimStrategy*.
 
-*subLvAlignmentStrategy*: this is only employed with the *alignmentLevel* option set to **. It is the strategy to align the compared second level texts, e.g. the sentences inside the aligned paragraphs. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Default: *closestSimStrategy*.
+*subLvAlignmentStrategy*: this is only employed with the *alignmentLevel* option set to *sentenceWithParagraphSeparatedByEmptyLinePreAlignment*. It is the strategy to align the compared second level texts, e.g. the sentences inside the aligned paragraphs. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Default: *closestSimStrategy*.
 		
 *embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
