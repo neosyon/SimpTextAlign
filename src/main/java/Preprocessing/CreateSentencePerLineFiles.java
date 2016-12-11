@@ -13,7 +13,7 @@ import simplifiedTextAlignment.Utils.TextProcessingUtils;
 public class CreateSentencePerLineFiles {
 
 	public static void main(String args[]) throws IOException{
-		String baseDir = "/path/to/your/newsela/parent/folder/";
+		String baseDir = "/path/to/your/dataset/parent/folder/";
 		String inFolder = baseDir+"newsela_article_corpus_2016-01-29/articles/";
 		String outFolder = baseDir+"newsela_article_corpus_2016-01-29/articlesSentPerLine/";
 

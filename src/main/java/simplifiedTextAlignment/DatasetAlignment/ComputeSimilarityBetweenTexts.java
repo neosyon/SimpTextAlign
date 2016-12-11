@@ -24,7 +24,7 @@ public class ComputeSimilarityBetweenTexts {
 	public static void main(String args[]) throws IOException{
 		//BEGINNING OF CONFIG PARAMETERS
 		
-		String baseDir = "/path/to/your/newsela/parent/folder/";
+		String baseDir = "/path/to/your/dataset/parent/folder/";
 		String inFile = baseDir+"SimplifiedTextAlignment/WikiSimpleWiki/annotations.txt";
 
 		int firstSentIndex = 1;
