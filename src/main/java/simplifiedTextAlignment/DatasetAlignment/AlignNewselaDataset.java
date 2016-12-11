@@ -26,7 +26,7 @@ public class AlignNewselaDataset {
 	public static void main(String args[]) throws IOException{
 		//BEGINNING OF CONFIG PARAMETERS
 		
-		String baseDir = "/home/mfranco/nlp/corpora/";
+		String baseDir = "/path/to/your/newsela/parent/folder/";
 		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/articles/";
 //		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/testArticles/";
 

@@ -13,7 +13,7 @@ public class InterpolateListWithSimilarities {
 	public static void main(String args[]) throws IOException{
 		//BEGINNING OF CONFIG PARAMETERS
 		
-		String baseDir = "/home/mfranco/nlp/corpora/";
+		String baseDir = "/path/to/your/newsela/parent/folder/";
 		String inFile = baseDir+"SimplifiedTextAlignment/WikiSimpleWiki/annotations.txt";
 		
 		String alignmentLevel = DefinedConstants.SentenceLevel;
