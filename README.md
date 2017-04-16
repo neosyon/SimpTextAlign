@@ -6,7 +6,7 @@ The **lexical text similarity strategy** implements the Character *N*-Gram (**CN
 
 There are two possible **semantic text similarity strategies**. The first one (**WAVG**), is based on representing each text by averaging its word embeddings and comparing them with the cosine similarity. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) [3] model. It is based on the use of directed edge word embedding alignments. Note that these two **embedding-based approaches require the corresponding embedding collection** as input.
 
-We have two **alignment strategies**. The first one **aligns texts using the closest (most similar) text**. The second one **aligns to the closest** texts **but** employs a post-processing to **force the target aligned text offsets to be increasing in value**. Basically, it extracts the longest increassing (or equal) subsequence of aligned target offsets. Next, it restricts the searching space of the texts not included in that sequence to the indexes of its previous and next aligned texts. 
+We have two **alignment strategies**. The first one **aligns texts using the closest (most similar) text**. The second one **aligns to the closest** texts **but** employs a post-processing to **force the target aligned text offsets to be in increasing value**. Basically, it extracts the longest increassing (or equal) subsequence of aligned target offsets. Next, it restricts the searching space of the texts not included in that sequence to the indexes of its previous and next aligned texts. 
 
 # How to use
 
