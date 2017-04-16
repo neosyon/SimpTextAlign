@@ -68,7 +68,7 @@ ComputeSimilarityBetweenTexts -i inFile -o outFile -s similarityStrategy {-e emb
 
 # References
 
-Please cite [1] if you use this code to align datasets.
+**Please cite [1] if you use this code to align datasets.**
 
 [1] Sanja Štajner, Marc Franco-Salvador, Simone Paolo Ponzetto, Paolo Rosso, and Heiner Stuckenschmidt. Sentence Alignment Methods for Improving Text Simplification Systems. In Proceedings of the 55th Annual Meeting of the
 Association for Computational Linguistics (ACL 2017).
