@@ -2,7 +2,7 @@
 
 This project includes several lexical and semantic  **text similarity methods** and **alignment strategies** for the **simplified text alignment** task. It is also able to **align at different text representation levels**: **paragraph**, **sentence**, and **sentence with paragraph pre-alignment**. We provide classes to align the **[Newsela dataset](https://newsela.com/data/)** and also a **custom** one.
 
-The **lexical similarity strategy** implements the Character *N*-Gram (**CNG**) [1] similarity for text, combined with the log TF-IDF weighting and cosine similarity for the comparison. Since this approach do **not uses any language-specific resource**, it works for any language. There are two possible **semantic similarity strategies**. The first one, **WAVG**, is based on representing each text by averaging its word embeddings, with cosine similarity for the comparison. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) [2] model based on the use of directed edge word embedding alignments. These two **embedding-based approaches require the corresponding embedding collection** as input.
+The **lexical similarity strategy** implements the Character *N*-Gram (**CNG**) [2] similarity for text, combined with the log TF-IDF weighting and cosine similarity for the comparison. Since this approach do **not uses any language-specific resource**, it works for any language. There are two possible **semantic similarity strategies**. The first one, **WAVG**, is based on representing each text by averaging its word embeddings, with cosine similarity for the comparison. The second approach implements the Continuous Word Alignment-based Similarity Analysis (**CWASA**) [3] model based on the use of directed edge word embedding alignments. These two **embedding-based approaches require the corresponding embedding collection** as input.
 
 We have two **alignment strategies**. The first one **aligns texts using the closest (most similar) text**. The second one **aligns to the closest** texts **but** employs a post-processing to **force the target aligned text offsets to be increasing in value**. Basically, it extracts the longest increassing (or equal) subsequence of aligned target offsets. Next, it restricts the searching space of the texts not included in that sequence to the indexes of its previous and next aligned texts. 
 
@@ -68,7 +68,21 @@ ComputeSimilarityBetweenTexts -i inFile -o outFile -s similarityStrategy {-e emb
 
 # References
 
-[1] Paul Mcnamee and James Mayfield. 2004. Character n-gram tokenization for European language text retrieval. Information Retrieval, 7(1):73–97.
+Please cite [1] if you use this code to align datasets.
 
-[2] Marc Franco-Salvador, Parth Gupta, Paolo Rosso, and Rafael E. Banchs. 2016. Cross-language plagiarism detection over continuous-space- and knowledge graph-based representations of language. Knowledge-Based Systems, 111:87–99.
+[1] Sanja Štajner, Marc Franco-Salvador, Simone Paolo Ponzetto, Paolo Rosso, and Heiner Stuckenschmidt. Sentence Alignment Methods for Improving Text Simplification Systems. In Proceedings of the 55th Annual Meeting of the
+Association for Computational Linguistics (ACL 2017).
+
+```
+@inproceedings{stajner2017acl,
+  title={Sentence Alignment Methods for Improving Text Simplification Systems},
+  author={\v{S}tajner, Sanja and Franco-Salvador, Marc and Ponzetto, Simone Paolo and Rosso, Paolo and Stuckenschmidt, Heiner},
+  booktitle={Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (ACL 2017)},
+  year={2017}
+}
+```
+
+[2] Paul Mcnamee and James Mayfield. 2004. Character n-gram tokenization for European language text retrieval. Information Retrieval, 7(1):73–97.
+
+[3] Marc Franco-Salvador, Parth Gupta, Paolo Rosso, and Rafael E. Banchs. 2016. Cross-language plagiarism detection over continuous-space- and knowledge graph-based representations of language. Knowledge-Based Systems, 111:87–99.
 
