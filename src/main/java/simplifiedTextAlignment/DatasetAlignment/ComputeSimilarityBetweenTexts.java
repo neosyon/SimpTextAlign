@@ -67,8 +67,8 @@ public class ComputeSimilarityBetweenTexts {
 			similarityStrategy = param2value.get("similarity");
 			embeddingsFile = param2value.get("emb");
 			if (similarityStrategy != null && similarityStrategy.length() == 3 && similarityStrategy.charAt(0) == 'C'	&& similarityStrategy.charAt(2) == 'G') {
-				similarityStrategy = DefinedConstants.CNGstrategy;
 				nGramSize = Integer.parseInt(similarityStrategy.charAt(1) + "");
+				similarityStrategy = DefinedConstants.CNGstrategy;
 			}
 		} else {
 			System.out.println("Using parameters by default. ");
