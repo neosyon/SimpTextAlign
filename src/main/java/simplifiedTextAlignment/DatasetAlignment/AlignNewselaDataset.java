@@ -141,22 +141,24 @@ public class AlignNewselaDataset {
 					file2clean.put(file1, TextProcessingUtils.getCleanText(text1,alignmentLevel, similarityStrategy, model));
 			}
 			
+			List<Text2abstractRepresentation> cleanSubtexts1;
+			List<Text2abstractRepresentation> cleanSubtexts2;
 			for (int i = 0; i < 5; i++) {
-				String file1 = fileProto.replace("." + language + ".0.txt","." + language + "." + i + ".txt");
-				List<Text2abstractRepresentation> cleanSubtexts1 = file2clean.get(file1);
-				for (int j = i+1; j <= 5; j++) {
-					String file2 = fileProto.replace("." + language + ".0.txt","." + language + "." + j + ".txt");
-					List<Text2abstractRepresentation> cleanSubtexts2;
-					if((cleanSubtexts2=file2clean.get(file2))!=null) {
-						List<TextAlignment> alignments = VectorUtils.alignUsingStrategy(cleanSubtexts1, cleanSubtexts2,similarityStrategy, alignmentStrategy, model);
-//						MyIOutils.displayAlignments(alignments,false);
-//						System.in.read();	
-						if(alignmentLevel.equals(DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel))
-							alignments = VectorUtils.getSubLevelAlignments(alignments, cleanSubtexts1, cleanSubtexts2, similarityStrategy, subLvAlignmentStrategy, model);
-						MyIOutils.saveAlignments(alignments, outFolder + file2 + "_ALIGNED_WITH_" + file1);
+				String file1 = fileProto.replace("." + language + ".0.txt", "." + language + "." + i + ".txt");
+				if ((cleanSubtexts1 = file2clean.get(file1)) != null) {
+					for (int j = i + 1; j <= 5; j++) {
+						String file2 = fileProto.replace("." + language + ".0.txt", "." + language + "." + j + ".txt");
+						if ((cleanSubtexts2 = file2clean.get(file2)) != null) {
+							List<TextAlignment> alignments = VectorUtils.alignUsingStrategy(cleanSubtexts1,	cleanSubtexts2, similarityStrategy, alignmentStrategy, model);
+//							MyIOutils.displayAlignments(alignments,false);
+//							System.in.read();
+							if (alignmentLevel.equals(DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel))
+								alignments = VectorUtils.getSubLevelAlignments(alignments, cleanSubtexts1, cleanSubtexts2, similarityStrategy, subLvAlignmentStrategy, model);
+							MyIOutils.saveAlignments(alignments, outFolder + file2 + "_ALIGNED_WITH_" + file1);
+						}
 					}
 				}
-			}	
+			}
 			
 //			String text1 = MyIOutils.readTextFile(inFolder+file1);
 //			List<Text2abstractRepresentation> cleanSubtexts1 = TextProcessingUtils.getCleanText(text1,alignmentLevel, similarityStrategy, model);
