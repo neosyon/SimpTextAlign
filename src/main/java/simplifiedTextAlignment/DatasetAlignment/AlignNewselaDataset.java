@@ -84,7 +84,6 @@ public class AlignNewselaDataset {
 			System.out.println("Using parameters by default. ");
 			MyIOutils.showNewselaUsageMessage();
 		}
-
 		//END CONFIG PARAMETERS
 		
 		boolean isCWASA = false;

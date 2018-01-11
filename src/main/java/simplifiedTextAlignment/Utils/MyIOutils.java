@@ -153,24 +153,24 @@ public class MyIOutils {
 	public static void showNewselaUsageMessage() {
 		System.out.println("Usage:\nprogram -i inFolder -o outFolder  -l language -s similarityStrategy -a alignmentLevel -t alignmentStrategy"
 				+ " {-u SubLevelalignmentStrategy} {-e embeddingsTxtFile}\n"
-				+ "\"inFolder\" is the folder with the original newsela texts."	
-				+ "\"outFolder\" is the folder where the alignments will be stored."	
-				+ "\"language\" can be \""+DefinedConstants.SpanishLanguage+"\" or \""+DefinedConstants.EnglishLanguage+"\". Default: \""+DefinedConstants.EnglishLanguage+"\"."	
-				+ "\"similarityStrategy\" can be \""+DefinedConstants.CNGstrategy+"\", \""+DefinedConstants.WAVGstrategy+"\", or \""+DefinedConstants.CWASAstrategy+"\", where the N in \""+DefinedConstants.CNGstrategy+"\" should be replaced for the desired n-gram size, e.g. \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\". Default: \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\"."	
-				+ "\"alignmentLevel\" can be \""+DefinedConstants.ParagraphSepEmptyLineLevel+"\", \""+DefinedConstants.SentenceLevel+"\", or \""+DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel+"\". Default: \""+DefinedConstants.SentenceLevel+"\"."
-				+ "\"alignmentStrategy\" can be \""+DefinedConstants.closestSimStrategy+"\" or \""+DefinedConstants.closestSimKeepingSeqStrategy+"\". Default: \""+DefinedConstants.closestSimStrategy+"\"."
-				+ "\"SubLevelalignmentStrategy\" can be \""+DefinedConstants.closestSimStrategy+"\" or \""+DefinedConstants.closestSimKeepingSeqStrategy+"\". Default: \""+DefinedConstants.closestSimStrategy+"\"."
-				+ "\"embeddingsTxtFile\" is the file with the embeddings using the classical word2vec txt format."	
+				+ "\"inFolder\" is the folder with the original newsela texts.\n"	
+				+ "\"outFolder\" is the folder where the alignments will be stored.\n"	
+				+ "\"language\" can be \""+DefinedConstants.SpanishLanguage+"\" or \""+DefinedConstants.EnglishLanguage+"\". Default: \""+DefinedConstants.EnglishLanguage+"\".\n"	
+				+ "\"similarityStrategy\" can be \""+DefinedConstants.CNGstrategy+"\", \""+DefinedConstants.WAVGstrategy+"\", or \""+DefinedConstants.CWASAstrategy+"\", where the N in \""+DefinedConstants.CNGstrategy+"\" should be replaced for the desired n-gram size, e.g. \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\". Default: \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\".\n"	
+				+ "\"alignmentLevel\" can be \""+DefinedConstants.ParagraphSepEmptyLineLevel+"\", \""+DefinedConstants.SentenceLevel+"\", or \""+DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel+"\". Default: \""+DefinedConstants.SentenceLevel+"\".\n"
+				+ "\"alignmentStrategy\" can be \""+DefinedConstants.closestSimStrategy+"\" or \""+DefinedConstants.closestSimKeepingSeqStrategy+"\". Default: \""+DefinedConstants.closestSimStrategy+"\".\n"
+				+ "\"SubLevelalignmentStrategy\" can be \""+DefinedConstants.closestSimStrategy+"\" or \""+DefinedConstants.closestSimKeepingSeqStrategy+"\". Default: \""+DefinedConstants.closestSimStrategy+"\".\n"
+				+ "\"embeddingsTxtFile\" is the file with the embeddings using the classical word2vec txt format.\n"	
 				);		
 
 	}
 
 	public static void showCustomModelUsageMessage() {
 		System.out.println("Usage:\nprogram -i inFile -o outFile -s similarityStrategy {-e embeddingsTxtFile}\n"
-				+ "\"inFile\" is a file with two tab-separated texts per line. The program will output a similarity score for each one of these text pairs."	
-				+ "\"outFile\" contains the original \"inFile\" tab-separated texts plus their similarity score."	
-				+ "\"similarityStrategy\" can be \""+DefinedConstants.CNGstrategy+"\", \""+DefinedConstants.WAVGstrategy+"\", or \""+DefinedConstants.CWASAstrategy+"\", where the N in \""+DefinedConstants.CNGstrategy+"\" should be replaced for the desired n-gram size, e.g. \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\". Default: \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\"."	
-				+ "\"embeddingsTxtFile\" is the file with the embeddings using the classical word2vec txt format."	
+				+ "\"inFile\" is a file with two tab-separated texts per line. The program will output a similarity score for each one of these text pairs.\n"	
+				+ "\"outFile\" contains the original \"inFile\" tab-separated texts plus their similarity score.\n"	
+				+ "\"similarityStrategy\" can be \""+DefinedConstants.CNGstrategy+"\", \""+DefinedConstants.WAVGstrategy+"\", or \""+DefinedConstants.CWASAstrategy+"\", where the N in \""+DefinedConstants.CNGstrategy+"\" should be replaced for the desired n-gram size, e.g. \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\". Default: \""+DefinedConstants.CNGstrategy.replace("N", 3+"")+"\".\n"	
+				+ "\"embeddingsTxtFile\" is the file with the embeddings using the classical word2vec txt format.\n"	
 				);				
 	}
 }
