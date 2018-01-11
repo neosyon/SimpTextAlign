@@ -131,38 +131,65 @@ public class AlignNewselaDataset {
 		scanner.scan();
 		String[] files = scanner.getIncludedFiles();
 	
-		int j = 0;
-		for(String file1 : files){
-			String text1 = MyIOutils.readTextFile(inFolder+file1);
-			List<Text2abstractRepresentation> cleanSubtexts1 = TextProcessingUtils.getCleanText(text1,alignmentLevel, similarityStrategy, model);
-			String fileAux = null;
-			List<Text2abstractRepresentation> cleanSubtextsAux = null;
-			for (int i = 1; i <= 5; i++) {
-				String file2 = file1.replace("." + language + ".0.txt","." + language + "." + i + ".txt");
-				String text2 = MyIOutils.readTextFile(inFolder + file2);
-				if (text2 != null) {
-					List<Text2abstractRepresentation> cleanSubtexts2 = processCompareAndSave(cleanSubtexts1, text2, alignmentLevel, alignmentStrategy, subLvAlignmentStrategy, similarityStrategy, model, outFolder + file2 + "_ALIGNED_WITH_" + file1);
-					if(i == 1){
-						fileAux = file2;
-						cleanSubtextsAux = cleanSubtexts2;
+		int k = 0;
+		for(String fileProto : files){		
+			Map<String, List<Text2abstractRepresentation>> file2clean = new HashMap<String, List<Text2abstractRepresentation>>();
+			for (int i = 0; i <= 5; i++) {
+				String file1 = fileProto.replace("." + language + ".0.txt","." + language + "." + i + ".txt");
+				String text1 = MyIOutils.readTextFile(inFolder+file1);
+				if (text1 != null) 
+					file2clean.put(file1, TextProcessingUtils.getCleanText(text1,alignmentLevel, similarityStrategy, model));
+			}
+			
+			for (int i = 0; i < 5; i++) {
+				String file1 = fileProto.replace("." + language + ".0.txt","." + language + "." + i + ".txt");
+				List<Text2abstractRepresentation> cleanSubtexts1 = file2clean.get(file1);
+				for (int j = i+1; j <= 5; j++) {
+					String file2 = fileProto.replace("." + language + ".0.txt","." + language + "." + j + ".txt");
+					List<Text2abstractRepresentation> cleanSubtexts2;
+					if((cleanSubtexts2=file2clean.get(file2))!=null) {
+						List<TextAlignment> alignments = VectorUtils.alignUsingStrategy(cleanSubtexts1, cleanSubtexts2,similarityStrategy, alignmentStrategy, model);
+//						MyIOutils.displayAlignments(alignments,false);
+//						System.in.read();	
+						if(alignmentLevel.equals(DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel))
+							alignments = VectorUtils.getSubLevelAlignments(alignments, cleanSubtexts1, cleanSubtexts2, similarityStrategy, subLvAlignmentStrategy, model);
+						MyIOutils.saveAlignments(alignments, outFolder + file2 + "_ALIGNED_WITH_" + file1);
 					}
 				}
-			}
-			file1 = fileAux;
-			cleanSubtexts1 = cleanSubtextsAux;
-			if(file1 != null)
-			for (int i = 2; i <= 5; i++) {
-				String file2 = file1.replace("." + language + "." + (i - 1) + ".txt","." + language + "." + i + ".txt");
-				String text2 = MyIOutils.readTextFile(inFolder + file2);
-				if (text2 != null) {
-					List<Text2abstractRepresentation> cleanSubtexts2 = processCompareAndSave(cleanSubtexts1, text2, alignmentLevel, alignmentStrategy, subLvAlignmentStrategy, similarityStrategy, model, outFolder + file2 + "_ALIGNED_WITH_" + file1);
-					file1 = file2;
-					cleanSubtexts1 = cleanSubtexts2;
-				}
-			}
-			j++;
-			if(j%10 == 0)
-				System.out.println(j + "/" + files.length);
+			}	
+			
+//			String text1 = MyIOutils.readTextFile(inFolder+file1);
+//			List<Text2abstractRepresentation> cleanSubtexts1 = TextProcessingUtils.getCleanText(text1,alignmentLevel, similarityStrategy, model);
+//			String fileAux = null;
+//			List<Text2abstractRepresentation> cleanSubtextsAux = null;
+			
+//			for (int i = 1; i <= 5; i++) {
+//				String file2 = file1.replace("." + language + ".0.txt","." + language + "." + i + ".txt");
+//				String text2 = MyIOutils.readTextFile(inFolder + file2);
+//				if (text2 != null) {
+//					List<Text2abstractRepresentation> cleanSubtexts2 = processCompareAndSave(cleanSubtexts1, text2, alignmentLevel, alignmentStrategy, subLvAlignmentStrategy, similarityStrategy, model, outFolder + file2 + "_ALIGNED_WITH_" + file1);
+//					if(i == 1){
+//						fileAux = file2;
+//						cleanSubtextsAux = cleanSubtexts2;
+//					}
+//				}
+//			}
+//			file1 = fileAux;
+//			cleanSubtexts1 = cleanSubtextsAux;
+//			if(file1 != null)
+//			for (int i = 2; i <= 5; i++) {
+//				String file2 = file1.replace("." + language + "." + (i - 1) + ".txt","." + language + "." + i + ".txt");
+//				String text2 = MyIOutils.readTextFile(inFolder + file2);
+//				if (text2 != null) {
+//					List<Text2abstractRepresentation> cleanSubtexts2 = processCompareAndSave(cleanSubtexts1, text2, alignmentLevel, alignmentStrategy, subLvAlignmentStrategy, similarityStrategy, model, outFolder + file2 + "_ALIGNED_WITH_" + file1);
+//					file1 = file2;
+//					cleanSubtexts1 = cleanSubtexts2;
+//				}
+//			}
+			
+			k++;
+			if(k%10 == 0)
+				System.out.println(k + "/" + files.length);
 		}
 	}
 
