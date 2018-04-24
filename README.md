@@ -43,11 +43,11 @@ java -jar AlignNewselaDataset.jar -i inFolder -o outFolder  -l language -s simil
 		
 *embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
-# How to use CATS-Measure to compute similarity between texts
+# How to use CATS-Measure to compute similarity between text snippets
 
 CATS-Measure provides similarity measures for three different sentence/paragraph similarity methods.
 
-To compute similarity of a custom dataset of text pairs use the following class:
+To compute similarity of pairs of text snippets use the following class:
 
 [src/main/java/simplifiedTextAlignment/DatasetAlignment/ComputeSimilarityBetweenTexts.java](src/main/java/simplifiedTextAlignment/DatasetAlignment/ComputeSimilarityBetweenTexts.java)
 
@@ -74,7 +74,7 @@ java -jar ComputeSimilarityBetweenTexts.jar -i inFile -o outFile -s similaritySt
 
 **Please cite [1] if you use this code to align English corpora.**
 
-**Please cite [2] paper if you use this code to align Spanish corpora or use CATS-Measure.**
+**Please cite [2] if you use this code to align Spanish corpora or use the CATS-Measure.**
 
 # References
 
