@@ -14,4 +14,6 @@ public class DefinedConstants {
 
 	public static final String closestSimStrategy = "closestSimStrategy";
 	public static final String closestSimKeepingSeqStrategy = "closestSimKeepingSequenceStrategy";
+	
+	public static final String[] ABBREVIATIONS = {"Dr." , "Prof." , "Mr." , "Mrs." , "Ms." , "Jr." , "Ph.D."};
 }

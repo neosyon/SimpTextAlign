@@ -2,19 +2,19 @@ package simplifiedTextAlignment.Utils;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.text.BreakIterator;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import edu.stanford.nlp.ling.HasWord;
-import edu.stanford.nlp.ling.Sentence;
-import edu.stanford.nlp.process.DocumentPreprocessor;
 import simplifiedTextAlignment.Representations.EmbeddingModel;
 import simplifiedTextAlignment.Representations.ModelContainer;
 import simplifiedTextAlignment.Representations.NgramModel;
 import simplifiedTextAlignment.Representations.Text2abstractRepresentation;
+import simplifiedTextAlignment.Utils.DefinedConstants;
 
 public class TextProcessingUtils {
 	
@@ -93,18 +93,23 @@ public class TextProcessingUtils {
 			for(String subtext : ar) subtexts.add(subtext);
 		}
 		else if(alignemntStrategy.equals(DefinedConstants.SentenceLevel)){
-			Reader reader = new StringReader(text);
-			DocumentPreprocessor dp = new DocumentPreprocessor(reader);
-			List<String> sentenceList = new LinkedList<String>();
-
-			for (List<HasWord> sentence : dp) {
-			   String sentenceString = Sentence.listToString(sentence);
-			   sentenceList.add(sentenceString.toString());
-			}
-
-			for (String sentence : sentenceList) {
-				subtexts.add(sentence);
-			}
+			BreakIterator bi = BreakIterator.getSentenceInstance(Locale.US);
+	        bi.setText(text);
+	        int start = bi.first();
+	        int end = bi.next();
+	        int tempStart = start;
+	        while (end != BreakIterator.DONE) {
+	            String sentence = text.substring(start, end);
+	            if (! hasAbbreviation(sentence)) {
+	                sentence = text.substring(tempStart, end);
+	                tempStart = end;
+	                for(String auxSentence: sentence.split("\n"))
+	                	if(auxSentence.length() > 0)
+	                		subtexts.add(auxSentence);
+	            }
+	            start = end; 
+	            end = bi.next();
+	        }
 		}
 		else{
 			System.out.println("Error: alignment level not recognized.");
@@ -113,4 +118,16 @@ public class TextProcessingUtils {
 		
 		return subtexts;
 	}
+	
+    private static boolean hasAbbreviation(String sentence) {
+        if (sentence == null || sentence.isEmpty()) {
+            return false;
+        }
+        for (String w : DefinedConstants.ABBREVIATIONS) {
+            if (sentence.contains(w)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

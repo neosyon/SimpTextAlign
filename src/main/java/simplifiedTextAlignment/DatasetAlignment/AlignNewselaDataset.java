@@ -27,6 +27,8 @@ public class AlignNewselaDataset {
 		//BEGINNING OF CONFIG PARAMETERS
 		
 		String baseDir = "/path/to/your/newsela/parent/folder/";
+
+//		String inFolder = baseDir+"newsela/sample/";
 		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/articles/";
 //		String inFolder = baseDir+"SimplifiedTextAlignment/newsela_article_corpus_2016-01-29/testArticles/";
 
@@ -49,6 +51,7 @@ public class AlignNewselaDataset {
 		String subLvAlignmentStrategy = DefinedConstants.closestSimStrategy;
 //		String subLvAlignmentStrategy = DefinedConstants.closestSimKeepingSeqStrategy;
 		
+//		String outFolder = baseDir+"newsela/output/"+language+"/"+alignmentLevel+
 		String outFolder = baseDir+"newsela_article_corpus_2016-01-29/output/"+language+"/"+alignmentLevel+
 				"_"+(!alignmentLevel.equals(DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel) ? alignmentStrategy : alignmentStrategy+"_"+subLvAlignmentStrategy)
 				+"_"+(similarityStrategy.equals(DefinedConstants.CNGstrategy) ? similarityStrategy.replace("N", nGramSize+"") : similarityStrategy)+"/";
