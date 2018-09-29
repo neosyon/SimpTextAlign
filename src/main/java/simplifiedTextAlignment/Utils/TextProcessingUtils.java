@@ -87,7 +87,6 @@ public class TextProcessingUtils {
 
 	public static List<String> getSubtexts(String text, String alignemntStrategy) {
 		List<String> subtexts = new LinkedList<String>();
-				
 		if(alignemntStrategy.equals(DefinedConstants.ParagraphSepEmptyLineLevel) || alignemntStrategy.equals(DefinedConstants.ParagraphSepEmptyLineAndSentenceLevel)){
 			String ar[] = text.split("\n\n");
 			for(String subtext : ar) subtexts.add(subtext);
@@ -100,13 +99,13 @@ public class TextProcessingUtils {
 	        int tempStart = start;
 	        while (end != BreakIterator.DONE) {
 	            String sentence = text.substring(start, end);
-	            if (! hasAbbreviation(sentence)) {
+	            if (!endsWithAbbreviation(sentence) || end == text.length()) {
 	                sentence = text.substring(tempStart, end);
 	                tempStart = end;
 	                for(String auxSentence: sentence.split("\n"))
 	                	if(auxSentence.length() > 0)
 	                		subtexts.add(auxSentence);
-	            }
+	            }	            	
 	            start = end; 
 	            end = bi.next();
 	        }
@@ -119,12 +118,24 @@ public class TextProcessingUtils {
 		return subtexts;
 	}
 	
-    private static boolean hasAbbreviation(String sentence) {
+//    private static boolean hasAbbreviation(String sentence) {
+//        if (sentence == null || sentence.isEmpty()) {
+//            return false;
+//        }
+//        for (String w : DefinedConstants.ABBREVIATIONS) {
+//            if (sentence.contains(w)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+    
+    private static boolean endsWithAbbreviation(String sentence) {
         if (sentence == null || sentence.isEmpty()) {
             return false;
         }
         for (String w : DefinedConstants.ABBREVIATIONS) {
-            if (sentence.contains(w)) {
+            if (sentence.endsWith(w)) {
                 return true;
             }
         }
