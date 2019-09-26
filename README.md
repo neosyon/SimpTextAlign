@@ -33,13 +33,13 @@ java -jar AlignNewselaDataset.jar -i inFolder -o outFolder  -l language -s simil
 
 *language*: the language of the newsela texts. It can be *es* or *en*.
 
-*similarityStrategy*: is the strategy employed to compare the texts. It can be *CNG*, *WAVG*, or *CWASA*, where the *N* in *CNG* should be changed for the desired *n*-gram size, e.g. *C3G*. Default: *C3G*
+*similarityStrategy*: is the strategy employed to compare the texts. It can be *CNG*, *WAVG*, or *CWASA*, where the *N* in *CNG* should be changed for the desired *n*-gram size, e.g. *C3G*. Recommended: *C3G*
 
-*alignmentLevel*: is the text alignment level, i.e. the representation of each to align. It can be *paragraphSeparatedByEmptyLine*, *sentence*, or *sentenceWithParagraphSeparatedByEmptyLinePreAlignment*. Default: *sentence*.
+*alignmentLevel*: is the text alignment level, i.e. the representation of each to align. It can be *paragraphSeparatedByEmptyLine*, *sentence*, or *sentenceWithParagraphSeparatedByEmptyLinePreAlignment*. Recommended: *sentence*.
 
-*alignmentStrategy*: is the strategy to align the compared texts. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Default: *closestSimStrategy*.
+*alignmentStrategy*: is the strategy to align the compared texts. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Recommended: *closestSimStrategy*.
 
-*subLvAlignmentStrategy*: this is only employed with the *alignmentLevel* option set to *sentenceWithParagraphSeparatedByEmptyLinePreAlignment*. It is the strategy to align the compared second level texts, e.g. the sentences inside the aligned paragraphs. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Default: *closestSimStrategy*.
+*subLvAlignmentStrategy*: this is only employed with the *alignmentLevel* option set to *sentenceWithParagraphSeparatedByEmptyLinePreAlignment*. It is the strategy to align the compared second level texts, e.g. the sentences inside the aligned paragraphs. It can be *closestSimStrategy* or *closestSimKeepingSequenceStrategy*. Recommended: *closestSimStrategy*.
 		
 *embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
@@ -66,7 +66,7 @@ java -jar ComputeSimilarityBetweenTexts.jar -i inFile -o outFile -s similaritySt
 
 *outFile*: the name of the output file. It contains the original tab-separated texts plus their similarity score.
 
-*similarityStrategy*: is the strategy employed to compare the texts. It can be *CNG*, *WAVG*, or *CWASA*, where the *N* in *CNG* should be replaced for the desired *n*-gram size, e.g. *C3G*. Default: *C3G*.	
+*similarityStrategy*: is the strategy employed to compare the texts. It can be *CNG*, *WAVG*, or *CWASA*, where the *N* in *CNG* should be replaced for the desired *n*-gram size, e.g. *C3G*. Recommended: *C3G*.	
 
 *embeddingsTxtFile*: the embeddings using the classical word2vec txt format with a first line with the number of embeddings and embedding length and the next lines containing the embeddings. This file is only required with *WAVG* and *CWASA*.
 
